@@ -7,6 +7,8 @@
 //Declare Variables
 uint32_t scanTime = 10000;
 volatile bool ledState = 0;
+const int32_t debounceTime_ms = 200;
+bool buttonState = 0;
 
 //Mapping Variables
 uint32_t inputPot = 0;
@@ -48,7 +50,9 @@ void loop() {
  Serial.print("Input val: ");
  Serial.print(inputPot);
  Serial.print(" Output val: ");
- Serial.println(outputPeriod);
+ Serial.print(outputPeriod);
+ Serial.print(" Button: ");
+ Serial.println(buttonState);
 
 //Configure scan time
  scanTime = outputPeriod/2;
@@ -57,3 +61,17 @@ void loop() {
  }
  previousTime_us = micros();
 }
+
+//Interrupt service routine
+void ISR_Button(){
+  static uint32_t previousMillisButton = millis();
+  uint32_t currentMillisButton = millis();
+
+  //Serial.println("Arrived in ISR");
+    if ((currentMillisButton - previousMillisButton) >= debounceTime_ms){
+      previousMillisButton = currentMillisButton;
+      buttonState = !buttonState;
+    }
+    
+}
+
