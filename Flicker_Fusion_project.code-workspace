@@ -6,6 +6,10 @@
 		{
 			"name": "Map_pot",
 			"path": "Test_projects\\Map_pot"
+		},
+		{
+			"name": "PotMappedToPWM",
+			"path": "Test_projects\\PotMappedToPWM"
 		}
 	],
 	"settings": {}
