@@ -35,7 +35,7 @@ void loop() {
  inputPot = constrain(inputPot,1,102);
 
  //Map input to output range
- outputPeriod = map(inputPot, inputMin, inputMax, outputPeriodMin, outputPeriodMax);
+ outputPeriod = map(inputPot, inputMin, inputMax, outputPeriodMax, outputPeriodMin);
  
  
  //Print Results
