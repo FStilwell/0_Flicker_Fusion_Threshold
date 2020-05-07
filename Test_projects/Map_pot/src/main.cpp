@@ -5,16 +5,42 @@
 //Declare Variables
 uint32_t scanTime = 10000;
 
+//Mapping Variables
+uint32_t inputPot = 0;
+const uint32_t inputMin = 0;
+const uint32_t inputMax = 102;
+
+uint32_t outputPeriod = 0;
+const uint32_t outputPeriodMin = 1;
+const uint32_t outputPeriodMax = 30000; //30,000 usecs
+
 void setup() {
  pinMode(potPin, INPUT);
+ analogReadResolution(10); //10bit ADC
  Serial.begin(115200);
 }
 
 void loop() {
  static uint32_t previousTime_us = 0;
- 
- Serial.println(analogRead(potPin));
 
+ //Format input signal
+ inputPot = analogRead(potPin)/10; //Divide by 10 for more stable values
+
+ //Map input to output range
+ 
+ outputPeriod = map(inputPot, inputMin, inputMax, outputPeriodMin, outputPeriodMax);
+ 
+ //outputPeriod = (inputPot - inputMin)/(inputMax - inputMin);
+ //outputPeriod = outputPeriod*(outputPeriodMax - outputPeriodMin) + outputPeriodMin;
+ 
+ 
+ //Print Results
+ Serial.print("Input val: ");
+ Serial.print(inputPot);
+ Serial.print(" Output val: ");
+ Serial.println(outputPeriod);
+
+//Configure scan time
  while((micros()-previousTime_us) <= scanTime) {
    //do nothing
  }
