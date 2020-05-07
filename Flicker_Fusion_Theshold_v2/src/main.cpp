@@ -7,8 +7,9 @@
 //Declare Variables
 uint32_t scanTime = 10000;
 volatile bool ledState = 0;
-const int32_t debounceTime_ms = 200;
+const int32_t debounceTime_ms = 150;
 bool buttonState = 0;
+float freq = 0;
 
 //Mapping Variables
 uint32_t inputPot = 0;
@@ -26,8 +27,10 @@ void setup() {
  pinMode(potPin, INPUT);
  pinMode(ledPin, OUTPUT);
  analogReadResolution(10); //10bit ADC
+
  //Initialise interrupt
  attachInterrupt(buttonPin, ISR_Button, FALLING);
+
  Serial.begin(115200);
 }
 
@@ -44,15 +47,23 @@ void loop() {
 
  //Map input to output range
  outputPeriod = map(inputPot, inputMin, inputMax, outputPeriodMax, outputPeriodMin);
+
+ //Calculate frequency
+ freq = (1.0/outputPeriod) * 1000000.0; //Multiply by 10^6 as period is in usec
  
  
  //Print Results
- Serial.print("Input val: ");
- Serial.print(inputPot);
- Serial.print(" Output val: ");
- Serial.print(outputPeriod);
- Serial.print(" Button: ");
- Serial.println(buttonState);
+//  Serial.print("Input val: ");
+//  Serial.print(inputPot);
+//  Serial.print(" Output val: ");
+//  Serial.print(outputPeriod);
+//  Serial.print(" Button: ");
+//  Serial.print(buttonState);
+//  Serial.print(" Frequency: ");
+//  Serial.println(freq);
+
+//Plot PWM
+Serial.println(ledPin);
 
 //Configure scan time
  scanTime = outputPeriod/2;
@@ -75,3 +86,7 @@ void ISR_Button(){
     
 }
 
+//End of program
+void saveFreq(){
+  
+}
