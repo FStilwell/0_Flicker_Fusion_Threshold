@@ -38,7 +38,6 @@ void setup() {
 }
 //===================================== Main Loop ================================================
 void loop() {
- static uint32_t elapsedPrevious_us = 0;
  static uint32_t previousTime_us = 0;
  
  //Change state to save frequency
@@ -75,7 +74,7 @@ void loop() {
 //  Serial.print(buttonState);
  Serial.print(" Frequency: ");
  Serial.print(freq);
- Serial.print("Hz , ");
+ Serial.println("Hz ");
 
 //Configure scan time
  scanTime = outputPeriod/2;
