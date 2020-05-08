@@ -5,20 +5,21 @@
 #define buttonPin 12
 
 //Declare Variables
-uint32_t scanTime = 0;
-volatile bool ledState = 0;
 const int32_t debounceTime_ms = 150;
 bool buttonState = 0;
+
+uint32_t scanTime = 0;
+volatile bool ledState = 0;
 float freq = 0;
 
-//Mapping Variables
+//Variables and Constants for Mapping
 uint32_t inputPot = 0;
 const uint32_t inputMin = 0;
 const uint32_t inputMax = 102;
 
 uint32_t outputPeriod = 0;
 const uint32_t outputPeriodMin = 1;
-const uint32_t outputPeriodMax = 40000; //30,000 usecs
+const uint32_t outputPeriodMax = 40000; // 40,000 usecs
 
 //Funtion Prototypes
 void ISR_Button();
@@ -38,7 +39,7 @@ void setup() {
 }
 //===================================== Main Loop ================================================
 void loop() {
- static uint32_t previousTime_us = 0;
+ static uint32_t previousTime_us = 0; //Static -> reads once
  
  //Change state to save frequency
  while(buttonState == 1){
