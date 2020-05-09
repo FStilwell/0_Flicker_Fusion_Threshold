@@ -35,7 +35,7 @@ void setup() {
  //Initialise interrupt
  attachInterrupt(buttonPin, ISR_Button, FALLING);
 
- Serial.begin(115200);
+ Serial.begin(250000);
 }
 //===================================== Main Loop ================================================
 void loop() {
@@ -47,14 +47,14 @@ void loop() {
  }
  
  //PWM plot point 1
- //Serial.println(ledState);
+ Serial.println(ledState);
 
  //Toggle LED state
  ledState = !ledState;
  digitalWrite(ledPin,ledState);
 
  //PWM plot point 2
- //Serial.println(ledState);
+ Serial.println(ledState);
 
  //Format input signal
  inputPot = analogRead(potPin)/10; //Divide by 10 for more stable values
@@ -73,9 +73,10 @@ void loop() {
 //  Serial.print(outputPeriod);
 //  Serial.print(" Button: ");
 //  Serial.print(buttonState);
- Serial.print(" Frequency: ");
- Serial.print(freq);
- Serial.println("Hz ");
+ 
+ //Serial.print(" Frequency: ");
+ //Serial.print(freq);
+ //Serial.println("Hz ");
 
 //Configure scan time
  scanTime = outputPeriod/2;
@@ -95,8 +96,7 @@ void ISR_Button(){
     if ((currentMillisButton - previousMillisButton) >= debounceTime_ms){
       previousMillisButton = currentMillisButton;
       buttonState = !buttonState;
-    }
-    
+    }   
 }
 //======================================= Save Frequency========================================
 //End of program
