@@ -14,4 +14,7 @@ The program was created initially in several smaller programs to prove functiona
 
 ### Determining Current Limiting Resistor
 
-According to the teensy's datasheet, the single pin current limit is 25mA. I chose this [LED datasheet](Project_media/Datasheets/element14_1003210_LED.pdf) as I have used it for another course.
+According to the [teensy's datasheet](Project_media/Datasheets/MK20DX64VLH7_Datasheet.pdf), the single pin current limit is 25mA. I chose [this LED datasheet](Project_media/Datasheets/element14_1003210_LED.pdf) as I have used it for another course.
+
+![Figure 1: Forward voltage and current selection](Project_media\Images\LED data.PNG)
+
