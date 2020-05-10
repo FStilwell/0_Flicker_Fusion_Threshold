@@ -74,5 +74,19 @@ The Serial plotter included a 'samples per second' value which was useful for ca
 
 ![Figure 6: Frequency error calculations](Project_media/Results/Test_calculations.jpg)
 
-*_Figure 6:_ Frequency error calculationst*
+*_Figure 6:_ Frequency error calculations*
+
+## 3. Results
+
+### 3.1 Series Resistor value
+
+Series resitor value = 160Ohms
+
+### 3.2 Frequency Errors
+
+At 25.24Hz, the error was -0.95%
+
+AT 57.25Hz, the error was 0.05%
+
+## 4. Discussion
 
