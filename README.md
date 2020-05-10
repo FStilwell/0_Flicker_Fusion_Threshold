@@ -21,7 +21,7 @@ According to the [teensy's datasheet](Project_media/Datasheets/MK20DX64VLH7_Data
 
 Using the parameters above, the series resistor value could be calculated using the equation in figure 2 below.
 
-![Figure 2: Series Resistor Calculations](Project_media\Results\Series_resitor_calcs.PNG)
+![Figure 2: Series Resistor Calculations](Project_media/Results/Series_resitor_calcs.PNG)
 *_Figure 2:_ Series Resistor Calculations*
 
 ### 2.2 Breadboarding the System
