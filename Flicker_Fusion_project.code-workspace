@@ -18,6 +18,10 @@
 		{
 			"name": "Flicker_Fusion_Theshold_v2",
 			"path": "Flicker_Fusion_Theshold_v2"
+		},
+		{
+			"name": "Debounce_with_E_interrupt",
+			"path": "Test_projects\\Debounce_with_E_interrupt"
 		}
 	],
 	"settings": {}
