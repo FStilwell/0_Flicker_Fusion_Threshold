@@ -17,18 +17,21 @@ The program was created initially in several smaller programs to prove functiona
 According to the [teensy's datasheet](Project_media/Datasheets/MK20DX64VLH7_Datasheet.pdf), the single pin current limit is 25mA. I chose [this LED datasheet](Project_media/Datasheets/element14_1003210_LED.pdf) as I have used it for another course. As shown in figure 1 below, a current of 10mA was chosen because it should still operate at (worst case) 90 degrees Celsius ambient temperature, it gives a decent relative luminous density, and it is below half the single pin current limit of the microcontroller. This gave a forward voltage of 1.75 volts.
 
 ![Figure 1: Forward voltage and current selection](Project_media/Images/LED_data.PNG)
+
 *_Figure 1:_ Forward voltage and current selection*
 
 Using the parameters above, the series resistor value could be calculated using the equation in figure 2 below.
 
 ![Figure 2: Series Resistor Calculations](Project_media/Results/Series_resitor_calcs.PNG)
+
 *_Figure 2:_ Series Resistor Calculations*
 
 ### 2.2 Breadboarding the System
 
 The microcontroller is powered by the USB 5V supply. The system needed an LED (built-in), a potentiometer, a pushbutton, and the necessary jumper wires. I chose pin A0 for the potentiometer as it needed to connect to an ADC module, pin 12 for the push button as it was in a convenient position, and added the jumper wires to connect the components according to [this Eagle schematic](Schematic/Flicker_Fusion_schematic.PNG). The pushbutton makes use of the internal pullup resistor function in the microcontroller. Figure 3 below shows this system.
 
-![Figure 3: Bread-boarded embedded system](Project_media\Images\Breadboarded_System.jpg)
+![Figure 3: Bread-boarded embedded system](Project_media/Images/Breadboarded_System.jpg)
+
 *_Figure 3:_ Bread-boarded embedded system*
 
 ### 2.3 Wrting the program
