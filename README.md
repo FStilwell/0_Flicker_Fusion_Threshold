@@ -40,6 +40,35 @@ I first broke the program into several smaller programs to make sure I could get
 
 After verifying that that the button debounce code worked, I went on to map the potentiometer ADC reading to a specific range in a [separate program](Test_projects/Map_pot).
 
-I built off of the mapping code to enable mapping of the period of a blinking LED in [another separate program](Test_projects/PotMappedToPWM). My approach to blinking the LED was to flip the state of the LED for each cycle of the main loop in the program. This meant that the scan time of the program had to be half that of the blinking period (for a full cycle). I chose to do it this way because it is simpler than writing out separate on and off times for the LED. But this also meant that the duty cycle could only be 50%, which worked in favour of the project.
+I built off of the mapping code to enable mapping of the period of a blinking LED in [another separate program](Test_projects/PotMappedToPWM). My approach to blinking the LED was to flip the state of the LED for each cycle of the main loop in the program. This meant that the scan time of the program had to be half that of the blinking period for a full cycle. I chose to do it this way because it is simpler than writing out separate on and off times for the LED. But this also meant that the duty cycle could only be 50%, which worked in favour of the project.
 
-This led to compiling the smaller programs together to produce the [finished program](Flicker_Fusion_Theshold_v2).
+This led to compiling the smaller programs together to produce the [finished program](Flicker_Fusion_Theshold_v2). The period of the flickering LED is mapped to the potentiometer ADC reading. The frequency is calculated from the period and outputted to the serial monitor at 115200 baud rate. Once the user scrolls to their subjective flicker fusion threshold, they can press the pushbutton which saves the frequency and is outputted to the serial monitor. The pushbutton can be pressed again to return to the frequency selection. I chose to map the potentiometer reading to the period rather than the frequency so that it would be simpler to configure the scan time. This way, the actual frequency would be depending on a more accurate microsecond value instead of depending on a calculated floating point variable with double precision. I chose to have the scan time in microseconds for extra precision if needed compared to milliseconds.
+
+### 2.4 Testing the Actual Frequency
+
+I had no oscilloscope available, nor a multimeter with frequency measuring capabability, so I had to use a Serial Plotter. In the main loop of the program, there are two PWM plot points:
+
+```cpp
+//PWM plot point 1
+ Serial.println(ledState);
+
+ //Toggle LED state
+ ledState = !ledState;
+ digitalWrite(ledPin,ledState);
+
+ //PWM plot point 2
+ Serial.println(ledState);
+ ```
+
+One is directly before the led state change and one directly after. It produces half of the square wave, so another loop cycle completes it. These 4 plotted points correspond to the 4 points shown in Figure 4 below. The resulting signal that was plotted is shown in Figure 5. It should be noted that the resulting signal is trapezoidal rather than square. I tried a faster baud rate but this did not change the the shape.
+
+![Figure 4: Square wave drawn by tutor Frank Beinersdorf](Project_media/Images/Square_wave.png)
+
+*_Figure 4:_ Square wave drawn by tutor Frank Beinersdorf*
+
+![Figure 5: Serial plotter signal output](Project_media/Images/Serial_plot_example.png)
+
+*_Figure 5:_ Serial plotter signal output*
+
+The Serial plotter included a 'samples per second' value which was useful for calculating the measured frequency. I recorded the Serial Plotter response at a lower frequency (25.24Hz) and higher frequency (57.22Hz) and put them in a [PowerPoint File](Project_media/Results/Flicker_Fusion_Threshold_Timing_Results.pptx). The program's displayed frequency was considered as the theoretical value, and the plotted frequency was considered as the experimental value. The error between these were calculated in figure 6 below.
+
