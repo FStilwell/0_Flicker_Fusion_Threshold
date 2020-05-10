@@ -28,12 +28,18 @@ Using the parameters above, the series resistor value could be calculated using 
 
 ### 2.2 Breadboarding the System
 
-The microcontroller is powered by the USB 5V supply. The system needed an LED (built-in), a potentiometer, a pushbutton, and the necessary jumper wires. I chose pin A0 for the potentiometer as it needed to connect to an ADC module, pin 12 for the push button as it was in a convenient position, and added the jumper wires to connect the components according to [this Eagle schematic](Schematic/Flicker_Fusion_schematic.PNG). The pushbutton makes use of the internal pullup resistor function in the microcontroller. Figure 3 below shows this system.
+The microcontroller is powered by the USB 5V supply. The system needed an LED (which was built-in), a potentiometer, a pushbutton, and the necessary jumper wires. I chose pin A0 for the potentiometer as it needed to connect to an ADC module, pin 12 for the push button as it was in a convenient position, and added the jumper wires to connect the components according to [this Eagle schematic](Schematic/Flicker_Fusion_schematic.PNG). The pushbutton makes use of the internal pullup resistor function in the microcontroller since I was unable to check the value of resistors I had. Figure 3 below shows this system.
 
 ![Figure 3: Bread-boarded embedded system](Project_media/Images/Breadboarded_System.jpg)
 
 *_Figure 3:_ Bread-boarded embedded system*
 
-### 2.3 Wrting the program
+### 2.3 Writing the program
 
-I first broke the program into serveral smaller programs to make sure I could get them to work individually. This saved time on troubleshooting issues in the main program. I started off by using an example of [button debouncing with an external interrupt](Test_projects/Debounce_with_E_interrupt) from in-class.
+I first broke the program into several smaller programs to make sure I could get them to work individually. This saved time on troubleshooting issues in the main program. I started off by using an example of [button debouncing with an external interrupt](Test_projects/Debounce_with_E_interrupt) from in-class.
+
+After verifying that that the button debounce code worked, I went on to map the potentiometer ADC reading to a specific range in a [separate program](Test_projects/Map_pot).
+
+I built off of the mapping code to enable mapping of the period of a blinking LED in [another separate program](Test_projects/PotMappedToPWM). My approach to blinking the LED was to flip the state of the LED for each cycle of the main loop in the program. This meant that the scan time of the program had to be half that of the blinking period (for a full cycle). I chose to do it this way because it is simpler than writing out separate on and off times for the LED. But this also meant that the duty cycle could only be 50%, which worked in favour of the project.
+
+This led to compiling the smaller programs together to produce the [finished program](Flicker_Fusion_Theshold_v2).
