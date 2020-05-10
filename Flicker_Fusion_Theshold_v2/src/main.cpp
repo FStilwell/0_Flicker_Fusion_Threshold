@@ -117,5 +117,5 @@ void saveFreq(){
   Serial.print(freq);
   Serial.print("Hz Period: ");
   Serial.print(outputPeriod);
-  Serial.println(". Press button to return");
+  Serial.println("us. Press button to return");
 }
