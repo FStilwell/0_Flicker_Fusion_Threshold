@@ -72,3 +72,7 @@ One is directly before the led state change and one directly after. It produces 
 
 The Serial plotter included a 'samples per second' value which was useful for calculating the measured frequency. I recorded the Serial Plotter response at a lower frequency (25.24Hz) and higher frequency (57.22Hz) and put them in a [PowerPoint File](Project_media/Results/Flicker_Fusion_Threshold_Timing_Results.pptx). The program's displayed frequency was considered as the theoretical value, and the plotted frequency was considered as the experimental value. The error between these were calculated in figure 6 below.
 
+![Figure 6: Frequency error calculations](Project_media/Results/Test_calculations.jpg)
+
+*_Figure 6:_ Frequency error calculationst*
+
