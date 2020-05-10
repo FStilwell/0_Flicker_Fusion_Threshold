@@ -1,3 +1,11 @@
+/*
+Flynn Stilwell May 2020
+
+This program maps a potentiometer ADC reading to a certain range.
+
+*/
+
+
 #include <Arduino.h>
 
 #define potPin 14
@@ -11,7 +19,7 @@ const uint32_t inputMin = 0;
 const uint32_t inputMax = 102;
 
 uint32_t outputPeriod = 0;
-const uint32_t outputPeriodMin = 1;
+const uint32_t outputPeriodMin = 1; //Minimum value of 1 to prevent dividing by 0 later
 const uint32_t outputPeriodMax = 30000; //30,000 usecs
 
 void setup() {
