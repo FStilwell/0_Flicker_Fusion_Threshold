@@ -33,4 +33,4 @@ The microcontroller is powered by the USB 5V supply. The system needed an LED (b
 
 ### 2.3 Wrting the program
 
-I first broke the program into serveral smaller programs to make sure I could get them to work individually. This saved time on troubleshooting issues in the main program. I started off by using an example of [button debouncing with an external interrupt](src\main.cpp) from in-class.
+I first broke the program into serveral smaller programs to make sure I could get them to work individually. This saved time on troubleshooting issues in the main program. I started off by using an example of [button debouncing with an external interrupt](Test_projects/Debounce_with_E_interrupt) from in-class.
