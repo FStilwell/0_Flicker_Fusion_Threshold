@@ -1,3 +1,12 @@
+/*
+Flynn Stilwell May 2020
+
+Mapping a potentiometer reading to a specified range. 
+
+*/
+
+
+
 #include <Arduino.h>
 
 #define potPin 14
@@ -14,7 +23,7 @@ const uint32_t inputMax = 102;
 
 uint32_t outputPeriod = 0;
 const uint32_t outputPeriodMin = 1;
-const uint32_t outputPeriodMax = 40000; //30,000 usecs
+const uint32_t outputPeriodMax = 40000; //40,000 microseconds
 
 void setup() {
  pinMode(potPin, INPUT);
@@ -32,7 +41,7 @@ void loop() {
 
  //Format input signal
  inputPot = analogRead(potPin)/10; //Divide by 10 for more stable values
- inputPot = constrain(inputPot,1,102);
+ inputPot = constrain(inputPot,1,102); //Make 1 the lowest to avoid dividing by 0 later
 
  //Map input to output range
  outputPeriod = map(inputPot, inputMin, inputMax, outputPeriodMax, outputPeriodMin);
