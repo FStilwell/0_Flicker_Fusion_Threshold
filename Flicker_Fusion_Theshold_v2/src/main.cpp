@@ -1,3 +1,15 @@
+/*
+Flynn Stilwell May 2020
+
+This is the finished code for the Flicker Fusion Threshold project.
+
+A potentiometer is used to alter the frequency of blinking led. One the flicker fusion
+threshold is found, the user can press the button and the serial monitor will display
+the chosen frequency. 
+
+*/
+
+
 #include <Arduino.h>
 
 #define potPin 14
@@ -18,7 +30,7 @@ const uint32_t inputMin = 0;
 const uint32_t inputMax = 102;
 
 uint32_t outputPeriod = 0;
-const uint32_t outputPeriodMin = 1;
+const uint32_t outputPeriodMin = 1; //Minimum period of 1 to avoid dividing by 0 later
 const uint32_t outputPeriodMax = 40000; // 40,000 usecs
 
 //Funtion Prototypes
@@ -33,9 +45,9 @@ void setup() {
  analogReadResolution(10); //10bit ADC
 
  //Initialise interrupt
- attachInterrupt(buttonPin, ISR_Button, FALLING);
+ attachInterrupt(buttonPin, ISR_Button, FALLING); //Faling edge detection
 
- Serial.begin(250000);
+ Serial.begin(115200);
 }
 //===================================== Main Loop ================================================
 void loop() {
@@ -64,7 +76,7 @@ void loop() {
  outputPeriod = map(inputPot, inputMin, inputMax, outputPeriodMax, outputPeriodMin);
 
  //Calculate frequency
- freq = (1.0/outputPeriod) * 1000000.0; //Multiply by 10^6 as period is in usec
+ freq = (1.0/outputPeriod) * 1000000.0; //Multiply by 10^6 to get Hz result as period is in usec
  
  //Print Results
 //  Serial.print("Input val: ");
@@ -74,9 +86,9 @@ void loop() {
 //  Serial.print(" Button: ");
 //  Serial.print(buttonState);
  
- //Serial.print(" Frequency: ");
- //Serial.print(freq);
- //Serial.println("Hz ");
+ Serial.print(" Frequency: ");
+ Serial.print(freq);
+ Serial.println("Hz ");
 
 //Configure scan time
  scanTime = outputPeriod/2;
