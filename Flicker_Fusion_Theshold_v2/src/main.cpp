@@ -59,14 +59,14 @@ void loop() {
  }
  
  //PWM plot point 1
- Serial.println(ledState);
+ //Serial.println(ledState);
 
  //Toggle LED state
  ledState = !ledState;
  digitalWrite(ledPin,ledState);
 
  //PWM plot point 2
- Serial.println(ledState);
+ //Serial.println(ledState);
 
  //Format input signal
  inputPot = analogRead(potPin)/10; //Divide by 10 for more stable values
