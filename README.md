@@ -2,15 +2,15 @@
 
 ## 1. Abstract
 
-This is a project for the 2020 Embedded Systems class at WelTec. The purpose of this project is to construct a prototype of an embedded system to determine the frequency of a person's subjective flicker fusion threshold. I constructed this project on a breadboard with a Teensy 3.2 development board, push button, and a 10kOhm potentiometer. The program allows the user to scroll through frequencies of a flickering LED until they find their subjective flicker fusion threshold, where they can press the pushbutton to display their chosen frequency on the serial monitor. The flicker frequency was verified using a SerialPlot program and it was found that at frequencies; 25.24Hz and 57.22Hz, the error between the programs frequencies and measured frequencies were -0.95% and 0.05% respectively. However, it is unknown exactly how accurate the frequencies were without an oscilloscope. I believe the purpose of this project was fulfilled. A video demonstration for this system can be found [here](https://youtu.be/JD2qBTWrE_s).
+This is a project for the 2020 Embedded Systems class at WelTec. The purpose of this project is to construct a prototype of an embedded system to determine the frequency of a person's subjective flicker fusion threshold. I constructed this project on a breadboard with a Teensy 3.2 development board, push button, and a 10kOhm potentiometer. The program allows the user to scroll through frequencies of a flickering LED until they find their subjective flicker fusion threshold, where they can press the pushbutton to display their chosen frequency on the serial monitor. The flicker frequency was verified using a SerialPlot program and it was found that at frequencies; 25.24Hz and 57.22Hz, the error between the program's frequencies and measured frequencies were -0.95% and 0.05% respectively. However, it is unknown exactly how accurate the frequencies were without an oscilloscope. I believe the purpose of this project was fulfilled. A video demonstration for this system can be found [here](https://youtu.be/JD2qBTWrE_s).
 
 ## 2. Introduction
 
 The purpose of this project is to construct a prototype of an embedded system to determine the frequency of a person's subjective flicker fusion threshold. "The flicker fusion threshold, or flicker fusion rate, is a concept in the psychophysics of vision. It is defined as the frequency at which an intermittent light stimulus appears to be completely steady to the average human observer" (Wikipedia, 2003).
 
-The system prototype I contructed is based off of a Teensy 3.2 microcontroller, which is breadboarded along with a push button and 10kohm potentiometer. When uploaded, the program blinks the teensy's in-built LED with a 50% duty-cycle. The frequency of the blinking LED is proportional to the position of the potentiometer wiper, starting at the lowest frequency. Once the user finds the frequency at which they cannot see blinking, they press the pushbutton. This will output a message to a serial monitor showing the chosen frequency, and a prompt to press the button to return to adjusting the frequency.
+The system prototype I contructed is based off of a Teensy 3.2 development board, which is breadboarded along with a push button and 10kohm potentiometer. When uploaded, the program blinks the teensy's in-built LED with a 50% duty-cycle. The period of the blinking LED is proportional to the position of the potentiometer wiper, starting at the lowest frequency. Once the user finds the frequency at which they cannot see blinking, they press the pushbutton. This will output a message to a serial monitor showing the chosen frequency, and a prompt them to press the button to return to adjusting the frequency.
 
-The system uses the teensy's built-in LED because I did not have the right components, nor a multimeter to check the resistors' values I did have. This report will include a demonstration of how I would calculate the current-limiting resistor value for the LED to compensate.
+The system uses the teensy's built-in LED because I did not have the right components, nor a multimeter to check the resistors' values I that did have. This report will include a demonstration of how I would calculate the current-limiting resistor value for the LED to compensate.
 
 The program was created initially in several smaller programs to prove functionalities; debouncing the button with an external interrupt, mapping the potentiometer analogue to digital (ADC) reading to a certain range, and mapping the ADC reading to the LED blink frequency. The frequency was tested using a serial plotter to plot the wavform.
 
@@ -32,7 +32,7 @@ Using the parameters above, the series resistor value could be calculated using 
 
 ### 3.2 Breadboarding the System
 
-The microcontroller is powered by the USB 5V supply. The system needed an LED (which was built-in), a potentiometer, a pushbutton, and the necessary jumper wires. I chose pin A0 for the potentiometer as it needed to connect to an ADC module, pin 12 for the push button as it was in a convenient position, and added the jumper wires to connect the components according to [this Eagle schematic](Schematic/Flicker_Fusion_schematic.PNG). The pushbutton makes use of the internal pullup resistor function in the microcontroller since I was unable to check the value of resistors I had. Figure 3 below shows this system.
+The microcontroller is powered by the USB 5V supply. The system needed an LED (which was built-in), a potentiometer, a pushbutton, and the necessary jumper wires. I chose pin A0 for the potentiometer as it needed to connect to an ADC module, pin 12 for the push button as it was in a convenient position, and added the jumper wires to connect the components according to [this EagleCAD schematic](Schematic/Flicker_Fusion_schematic.PNG). The pushbutton makes use of the internal pullup resistor function in the microcontroller since I was unable to check the value of resistors I had. Figure 3 below shows this system.
 
 ![Figure 3: Bread-boarded embedded system](Project_media/Images/Breadboarded_System.jpg)
 
@@ -50,7 +50,7 @@ This led to compiling the smaller programs together to produce the [finished pro
 
 ### 3.4 Testing the Actual Frequency
 
-I had no oscilloscope available, nor a multimeter with frequency measuring capabability, so I had to use a Serial Plotter. In the main loop of the program, there are two PWM plot points:
+I had no oscilloscope available, nor a multimeter with frequency measuring capabability, so I had to use a serial plotter called SerialPlot. In the main loop of the program, there are two PWM plot points:
 
 ```cpp
 //PWM plot point 1
@@ -64,7 +64,7 @@ I had no oscilloscope available, nor a multimeter with frequency measuring capab
  Serial.println(ledState);
  ```
 
-One is directly before the led state change and one directly after. It produces half of the square wave, so another loop cycle completes it. These 4 plotted points correspond to the 4 points shown in Figure 4 below. The resulting signal that was plotted is shown in Figure 5. It should be noted that the resulting signal is trapezoidal rather than square. I tried a faster baud rate but this did not change the the shape.
+One is directly before the led state change and one directly after. The two plot points produce half of the square wave, so another loop cycle completes it. These 4 plotted points correspond to the 4 points shown in Figure 4 below. The resulting signal that was plotted is shown in Figure 5. It should be noted that the resulting signal is trapezoidal rather than square. I tried a faster baud rate but this did not change the the shape.
 
 ![Figure 4: Square wave drawn by tutor Frank Beinersdorf](Project_media/Images/Square_wave.png)
 
@@ -74,7 +74,7 @@ One is directly before the led state change and one directly after. It produces 
 
 *_Figure 5:_ Serial plotter signal output*
 
-The Serial plotter included a 'samples per second' value which was useful for calculating the measured frequency. I recorded the Serial Plotter response at a lower frequency (25.24Hz) and higher frequency (57.22Hz) and put them in a [PowerPoint File](Project_media/Results/Flicker_Fusion_Threshold_Timing_Results.pptx). The program's displayed frequency was considered as the theoretical value, and the plotted frequency was considered as the experimental value. The error between these were calculated in figure 6 below.
+The Serial plotter included a 'samples per second' value which was useful for calculating the measured frequency. I recorded the SerialPlot response at a lower frequency (25.24Hz) and higher frequency (57.22Hz) and put them in a [PowerPoint File](Project_media/Results/Flicker_Fusion_Threshold_Timing_Results.pptx). The program's displayed frequency was considered as the theoretical value, and the plotted frequency was considered as the experimental value. The error between these were calculated in figure 6 below.
 
 ![Figure 6: Frequency error calculations](Project_media/Results/Test_calculations.jpg)
 
@@ -100,7 +100,7 @@ The chosen frequency and period is displayed in the serial monitor along with a 
 
 *_Figure 8:_ Serial Monitor - Chosen Frequency Screenshot*
 
-### 4.2 Frequency Errors
+### 4.3 Frequency Errors
 
 At 25.24Hz, the error was -0.95%
 
@@ -108,15 +108,15 @@ At 57.25Hz, the error was 0.05%
 
 ## 5. Discussion
 
-I believe this project met the task description sufficiently, however it was difficult to verify the system's frequency readings. It is unknown how long it takes to write to the serial monitor, and how the SerialPlot program samples the signal as it automatically sets the sample rate. I believe the trapezoidal wave produced is directly related to the sample rate because there is 1 sample between each logic transition as shown in figure 7 below. It seems this is a limitation of the SerialPlot program. I was satisfied with the frequency values, but it is unknown how accurate they are.
+I believe this project met the task description sufficiently, however it was difficult to verify the system's frequency readings. It is unknown how long it takes to write to the serial monitor, and it is unkown to me how the SerialPlot program samples the signal as it automatically sets the sample rate. I believe the trapezoidal wave produced is directly related to the sample rate because there is 1 sample between each logic transition as shown in figure 7 below. It seems this is a limitation of the SerialPlot program. I was satisfied with the frequency error values, but it is unknown how accurate they are.
 
 ![Figure 9: Trapezoidal wave example](Project_media/Images/Serial_plot_example-annotated.png)
 
 *_Figure 9:_ Trapezoidal wave example*
 
-A downside to mapping the potentiometer to the period is that the relationship between the frequency and the period is non linear. As the period decreases, the frequency increases exponentially. This could be changed in the future for a more linear response.
+A downside to mapping the potentiometer to the period is that the relationship between the frequency and the period is non-linear. As the period decreases, the frequency increases exponentially. This could be changed in the future for a more linear response by just mapping the potentiometer reading to the frequency, which, I believe, will slightly decrease the accuracy.
 
-The series resistor value was calculated as 155 Ohms, but the nearest preferred value rounded up was 160 Ohms according to [this table](Project_media/Datasheets/Standard_resistor_values.pdf) (McClure, n.d.). I chose the upper nearest resistor value because it is safer to have a lower current flowing rather than higher.
+The series resistor value was calculated as 155 Ohms, but the nearest preferred value rounded up was 160 Ohms according to [this table](Project_media/Datasheets/Standard_resistor_values.pdf) (McClure, n.d.). I chose the upper nearest preferred resistor value because it is safer to have a lower current flowing rather than higher.
 
 I found that the breadboard connections were not very reliable as the jumper wires would wiggle in the breadboard sockets. This was particularly a problem with the pushbutton jumpers, where the wire would have to be held down for a reliable connection. This could be mitigated by using a different breadboard, or moving the prototype onto stripboard.
 
